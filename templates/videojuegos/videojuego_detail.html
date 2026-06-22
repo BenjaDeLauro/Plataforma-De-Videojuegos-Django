@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<h2>{{ videojuego.titulo }}</h2>
+
+{% if videojuego.imagen %}
+    <img class="detalle-img" src="{{ videojuego.imagen.url }}" alt="{{ videojuego.titulo }}">
+{% endif %}
+
+<p>{{ videojuego.descripcion }}</p>
+<p><strong>Fecha de lanzamiento:</strong> {{ videojuego.fecha_lanzamiento }}</p>
+<p><strong>Precio:</strong> ${{ videojuego.precio }}</p>
+<p><strong>Categoría:</strong> {{ videojuego.categoria }}</p>
+<p><strong>Desarrolladora:</strong> {{ videojuego.desarrolladora }}</p>
+
+<p><strong>Plataformas:</strong></p>
+<ul>
+    {% for plataforma in videojuego.plataformas.all %}
+        <li>{{ plataforma.nombre }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'videojuego_list' %}">Volver</a>
+{% endblock %}

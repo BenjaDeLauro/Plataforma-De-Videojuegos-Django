@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<h2>Videojuegos</h2>
+
+{% if perms.core.add_videojuego %}
+    <a class="boton" href="{% url 'videojuego_create' %}">Crear videojuego</a>
+{% endif %}
+
+<div class="grid">
+    {% for videojuego in videojuegos %}
+        <article class="card">
+            {% if videojuego.imagen %}
+                <img src="{{ videojuego.imagen.url }}" alt="{{ videojuego.titulo }}">
+            {% endif %}
+
+            <h3>{{ videojuego.titulo }}</h3>
+            <p>{{ videojuego.descripcion|truncatewords:20 }}</p>
+            <p><strong>Categoría:</strong> {{ videojuego.categoria }}</p>
+            <p><strong>Precio:</strong> ${{ videojuego.precio }}</p>
+
+            <a href="{% url 'videojuego_detail' videojuego.pk %}">Ver detalle</a>
+
+            {% if perms.core.change_videojuego %}
+                <a href="{% url 'videojuego_update' videojuego.pk %}">Editar</a>
+            {% endif %}
+
+            {% if perms.core.delete_videojuego %}
+                <a href="{% url 'videojuego_delete' videojuego.pk %}">Eliminar</a>
+            {% endif %}
+        </article>
+    {% empty %}
+        <p>No hay videojuegos cargados.</p>
+    {% endfor %}
+</div>
+{% endblock %}
