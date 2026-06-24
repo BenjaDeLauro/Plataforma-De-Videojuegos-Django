@@ -55,13 +55,14 @@ ROOT_URLCONF = 'plataforma_videojuegos.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.categorias_context',
             ],
         },
     },
@@ -119,11 +120,14 @@ USE_TZ = True
 AUTH_USER_MODEL = 'core.UsuarioPersonalizado'
 
 STATIC_URL = 'static/'
+<<<<<<< HEAD
 STATICFILES_DIRS = [BASE_DIR / 'static']
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+=======
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'inicio'
-LOGOUT_REDIRECT_URL = 'login'
+LOGOUT_REDIRECT_URL = 'inicio'
+>>>>>>>
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
