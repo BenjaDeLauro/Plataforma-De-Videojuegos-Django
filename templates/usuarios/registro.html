@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
+
 <h2>Registro de usuario</h2>
 
 <form method="post" enctype="multipart/form-data" class="formulario">
     {% csrf_token %}
     {{ form.as_p }}
+
     <button type="submit">Registrarse</button>
+    <a href="{% url 'login' %}" class="boton secundario">Ya tengo cuenta</a>
 </form>
+
 {% endblock %}

@@ -16,8 +16,12 @@
         <a href="{% url 'inicio' %}">Inicio</a>
 
         {% if user.is_authenticated %}
-            <a href="{% url 'videojuego_list' %}">Videojuegos</a>
+            <a href="{% url 'catalogo' %}">Catálogo</a>
             <a href="{% url 'resena_list' %}">Reseñas</a>
+
+            {% if user.is_staff %}
+                <a href="/admin/">Admin</a>
+            {% endif %}
 
             <form method="post" action="{% url 'logout' %}" class="logout-form">
                 {% csrf_token %}
@@ -32,6 +36,7 @@
 
 <section class="categorias">
     <strong>Categorías:</strong>
+
     {% for categoria in categorias_nav %}
         <span>{{ categoria.nombre }}</span>
     {% empty %}

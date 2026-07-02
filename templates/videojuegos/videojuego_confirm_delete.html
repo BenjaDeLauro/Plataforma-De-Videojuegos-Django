@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
+
 <h2>Eliminar videojuego</h2>
 
-<p>¿Seguro que querés eliminar este videojuego?</p>
+<p>¿Seguro que querés eliminar el videojuego "{{ object.titulo }}"?</p>
 
-<form method="post">
+<form method="post" class="formulario">
     {% csrf_token %}
+
     <button type="submit">Sí, eliminar</button>
-    <a href="{% url 'videojuego_list' %}">Cancelar</a>
+    <a href="{% url 'catalogo' %}" class="boton secundario">Cancelar</a>
 </form>
+
 {% endblock %}

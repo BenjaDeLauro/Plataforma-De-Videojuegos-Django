@@ -22,6 +22,7 @@ class VideoJuegoForm(forms.ModelForm):
             'desarrolladora',
             'plataformas',
         ]
+
         widgets = {
             'fecha_lanzamiento': forms.DateInput(attrs={'type': 'date'}),
         }

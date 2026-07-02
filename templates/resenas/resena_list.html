@@ -1,30 +1,35 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
+
 <h2>Reseñas</h2>
 
 {% if perms.core.add_resena %}
-    <a class="boton" href="{% url 'resena_create' %}">Crear reseña</a>
+    <a href="{% url 'resena_create' %}" class="boton">Crear reseña</a>
 {% endif %}
 
 <div class="grid">
     {% for resena in resenas %}
         <article class="card">
             <h3>{{ resena.videojuego }}</h3>
+
             <p>{{ resena.comentario }}</p>
             <p><strong>Puntuación:</strong> {{ resena.puntuacion }}/10</p>
             <p><strong>Usuario:</strong> {{ resena.usuario }}</p>
 
+            <a href="{% url 'resena_detail' resena.pk %}" class="boton">Ver detalle</a>
+
             {% if perms.core.change_resena %}
-                <a href="{% url 'resena_update' resena.pk %}">Editar</a>
+                <a href="{% url 'resena_update' resena.pk %}" class="boton secundario">Editar</a>
             {% endif %}
 
             {% if perms.core.delete_resena %}
-                <a href="{% url 'resena_delete' resena.pk %}">Eliminar</a>
+                <a href="{% url 'resena_delete' resena.pk %}" class="boton peligro">Eliminar</a>
             {% endif %}
         </article>
     {% empty %}
         <p>No hay reseñas cargadas.</p>
     {% endfor %}
 </div>
+
 {% endblock %}

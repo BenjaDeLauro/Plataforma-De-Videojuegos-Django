@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
+
 <h2>Formulario de reseña</h2>
 
 <form method="post" class="formulario">
     {% csrf_token %}
     {{ form.as_p }}
+
     <button type="submit">Guardar</button>
+    <a href="{% url 'resena_list' %}" class="boton secundario">Cancelar</a>
 </form>
+
 {% endblock %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class UsuarioPersonalizado(AbstractUser):
@@ -40,20 +41,24 @@ class VideoJuego(models.Model):
     fecha_lanzamiento = models.DateField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     imagen = models.ImageField(upload_to='videojuegos/', blank=True, null=True)
-
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    desarrolladora = models.ForeignKey(Desarrolladora, on_delete=models.CASCADE)
-    plataformas = models.ManyToManyField(Plataforma)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='videojuegos')
+    desarrolladora = models.ForeignKey(Desarrolladora, on_delete=models.CASCADE, related_name='videojuegos')
+    plataformas = models.ManyToManyField(Plataforma, related_name='videojuegos')
 
     def __str__(self):
         return self.titulo
 
 
 class Resena(models.Model):
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    videojuego = models.ForeignKey(VideoJuego, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='resenas')
+    videojuego = models.ForeignKey(VideoJuego, on_delete=models.CASCADE, related_name='resenas')
     comentario = models.TextField()
-    puntuacion = models.IntegerField()
+    puntuacion = models.IntegerField(
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(10)
+        ]
+    )
     fecha = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -61,9 +66,12 @@ class Resena(models.Model):
 
 
 class Biblioteca(models.Model):
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    videojuego = models.ForeignKey(VideoJuego, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='biblioteca')
+    videojuego = models.ForeignKey(VideoJuego, on_delete=models.CASCADE, related_name='bibliotecas')
     agregado_en = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('usuario', 'videojuego')
 
     def __str__(self):
         return f'{self.usuario} tiene {self.videojuego}'

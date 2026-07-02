@@ -1,7 +1,8 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.contrib.auth import login, logout
+from django.contrib.auth import login
+from django.contrib.auth.models import Group
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .models import VideoJuego, Resena
@@ -19,6 +20,10 @@ class RegistroView(CreateView):
 
     def form_valid(self, form):
         usuario = form.save()
+
+        grupo_usuarios, creado = Group.objects.get_or_create(name='Usuarios')
+        usuario.groups.add(grupo_usuarios)
+
         login(self.request, usuario)
         return redirect(self.success_url)
 
@@ -39,7 +44,7 @@ class VideoJuegoCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVi
     model = VideoJuego
     form_class = VideoJuegoForm
     template_name = 'videojuegos/videojuego_form.html'
-    success_url = reverse_lazy('videojuego_list')
+    success_url = reverse_lazy('catalogo')
     permission_required = 'core.add_videojuego'
     raise_exception = True
 
@@ -48,7 +53,7 @@ class VideoJuegoUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVi
     model = VideoJuego
     form_class = VideoJuegoForm
     template_name = 'videojuegos/videojuego_form.html'
-    success_url = reverse_lazy('videojuego_list')
+    success_url = reverse_lazy('catalogo')
     permission_required = 'core.change_videojuego'
     raise_exception = True
 
@@ -56,7 +61,7 @@ class VideoJuegoUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVi
 class VideoJuegoDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = VideoJuego
     template_name = 'videojuegos/videojuego_confirm_delete.html'
-    success_url = reverse_lazy('videojuego_list')
+    success_url = reverse_lazy('catalogo')
     permission_required = 'core.delete_videojuego'
     raise_exception = True
 
@@ -65,6 +70,12 @@ class ResenaListView(LoginRequiredMixin, ListView):
     model = Resena
     template_name = 'resenas/resena_list.html'
     context_object_name = 'resenas'
+
+
+class ResenaDetailView(LoginRequiredMixin, DetailView):
+    model = Resena
+    template_name = 'resenas/resena_detail.html'
+    context_object_name = 'resena'
 
 
 class ResenaCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):

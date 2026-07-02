@@ -51,6 +51,7 @@ class VideoJuegoAdmin(admin.ModelAdmin):
     search_fields = ('titulo', 'descripcion', 'desarrolladora__nombre')
     list_filter = ('categoria', 'desarrolladora', 'plataformas')
     ordering = ('titulo',)
+    filter_horizontal = ('plataformas',)
 
 
 @admin.register(Resena)

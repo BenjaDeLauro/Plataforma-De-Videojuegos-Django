@@ -1,16 +1,23 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
+
 <section class="hero">
     <h2>Bienvenido a GameHub</h2>
-    <p>Sistema de gestión de videojuegos desarrollado con Django.</p>
+
+    <p>
+        Sistema de gestión de videojuegos desarrollado con Django.
+        Permite administrar un catálogo de juegos, categorías, plataformas,
+        desarrolladoras, usuarios, reseñas e imágenes.
+    </p>
 
     {% if user.is_authenticated %}
         <p>Hola, {{ user.username }}.</p>
-        <a class="boton" href="{% url 'videojuego_list' %}">Ver videojuegos</a>
+        <a href="{% url 'catalogo' %}" class="boton">Ver catálogo</a>
     {% else %}
-        <a class="boton" href="{% url 'login' %}">Iniciar sesión</a>
-        <a class="boton secundario" href="{% url 'registro' %}">Registrarse</a>
+        <a href="{% url 'login' %}" class="boton">Iniciar sesión</a>
+        <a href="{% url 'registro' %}" class="boton secundario">Registrarse</a>
     {% endif %}
 </section>
+
 {% endblock %}

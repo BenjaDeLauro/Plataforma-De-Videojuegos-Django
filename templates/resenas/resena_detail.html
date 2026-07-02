@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<h2>Detalle de reseña</h2>
+
+<div class="card">
+    <h3>{{ resena.videojuego }}</h3>
+
+    <p>{{ resena.comentario }}</p>
+    <p><strong>Puntuación:</strong> {{ resena.puntuacion }}/10</p>
+    <p><strong>Usuario:</strong> {{ resena.usuario }}</p>
+    <p><strong>Fecha:</strong> {{ resena.fecha }}</p>
+</div>
+
+<a href="{% url 'resena_list' %}" class="boton secundario">Volver</a>
+
+{% endblock %}

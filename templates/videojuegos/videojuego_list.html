@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
-<h2>Videojuegos</h2>
+
+<h2>Catálogo de videojuegos</h2>
 
 {% if perms.core.add_videojuego %}
-    <a class="boton" href="{% url 'videojuego_create' %}">Crear videojuego</a>
+    <a href="{% url 'videojuego_create' %}" class="boton">Crear videojuego</a>
 {% endif %}
 
 <div class="grid">
@@ -15,22 +16,25 @@
             {% endif %}
 
             <h3>{{ videojuego.titulo }}</h3>
+
             <p>{{ videojuego.descripcion|truncatewords:20 }}</p>
+
             <p><strong>Categoría:</strong> {{ videojuego.categoria }}</p>
             <p><strong>Precio:</strong> ${{ videojuego.precio }}</p>
 
-            <a href="{% url 'videojuego_detail' videojuego.pk %}">Ver detalle</a>
+            <a href="{% url 'videojuego_detail' videojuego.pk %}" class="boton">Ver detalle</a>
 
             {% if perms.core.change_videojuego %}
-                <a href="{% url 'videojuego_update' videojuego.pk %}">Editar</a>
+                <a href="{% url 'videojuego_update' videojuego.pk %}" class="boton secundario">Editar</a>
             {% endif %}
 
             {% if perms.core.delete_videojuego %}
-                <a href="{% url 'videojuego_delete' videojuego.pk %}">Eliminar</a>
+                <a href="{% url 'videojuego_delete' videojuego.pk %}" class="boton peligro">Eliminar</a>
             {% endif %}
         </article>
     {% empty %}
         <p>No hay videojuegos cargados.</p>
     {% endfor %}
 </div>
+
 {% endblock %}

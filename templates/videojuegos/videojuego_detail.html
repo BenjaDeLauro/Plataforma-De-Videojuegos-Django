@@ -1,24 +1,44 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
-<h2>{{ videojuego.titulo }}</h2>
 
-{% if videojuego.imagen %}
-    <img class="detalle-img" src="{{ videojuego.imagen.url }}" alt="{{ videojuego.titulo }}">
-{% endif %}
+<article class="detalle">
+    <h2>{{ videojuego.titulo }}</h2>
 
-<p>{{ videojuego.descripcion }}</p>
-<p><strong>Fecha de lanzamiento:</strong> {{ videojuego.fecha_lanzamiento }}</p>
-<p><strong>Precio:</strong> ${{ videojuego.precio }}</p>
-<p><strong>Categoría:</strong> {{ videojuego.categoria }}</p>
-<p><strong>Desarrolladora:</strong> {{ videojuego.desarrolladora }}</p>
+    {% if videojuego.imagen %}
+        <img src="{{ videojuego.imagen.url }}" alt="{{ videojuego.titulo }}" class="detalle-img">
+    {% endif %}
 
-<p><strong>Plataformas:</strong></p>
-<ul>
-    {% for plataforma in videojuego.plataformas.all %}
-        <li>{{ plataforma.nombre }}</li>
+    <p>{{ videojuego.descripcion }}</p>
+
+    <p><strong>Fecha de lanzamiento:</strong> {{ videojuego.fecha_lanzamiento }}</p>
+    <p><strong>Precio:</strong> ${{ videojuego.precio }}</p>
+    <p><strong>Categoría:</strong> {{ videojuego.categoria }}</p>
+    <p><strong>Desarrolladora:</strong> {{ videojuego.desarrolladora }}</p>
+
+    <h3>Plataformas</h3>
+
+    <ul>
+        {% for plataforma in videojuego.plataformas.all %}
+            <li>{{ plataforma.nombre }}</li>
+        {% empty %}
+            <li>No tiene plataformas cargadas.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Reseñas</h3>
+
+    {% for resena in videojuego.resenas.all %}
+        <div class="card">
+            <p>{{ resena.comentario }}</p>
+            <p><strong>Puntuación:</strong> {{ resena.puntuacion }}/10</p>
+            <p><strong>Usuario:</strong> {{ resena.usuario }}</p>
+        </div>
+    {% empty %}
+        <p>Este videojuego todavía no tiene reseñas.</p>
     {% endfor %}
-</ul>
 
-<a href="{% url 'videojuego_list' %}">Volver</a>
+    <a href="{% url 'catalogo' %}" class="boton secundario">Volver</a>
+</article>
+
 {% endblock %}
