@@ -120,27 +120,27 @@ http://127.0.0.1:8000/admin/
 
 ### Inicio
 
-![Inicio](docs/img/Inicio.png)
+![Inicio](docs/img/inicio.png)
 
 ### Catálogo
 
-![Catálogo](docs/img/Catalogo.png)
+![Catálogo](docs/img/catalogo.png)
 
 ### Detalle de videojuego
 
-![Detalle](docs/img/Detalle-Videojuego.png)
+![Detalle](docs/img/detalle-videojuego.png)
 
 ### Reseñas
 
-![Reseñas](docs/img/Reseñas.png)
+![Reseñas](docs/img/resenas.png)
 
 ### Login
 
-![Login](docs/img/Login.png)
+![Login](docs/img/login.png)
 
 ### Registro
 
-![Registro](docs/img/Registro.png)
+![Registro](docs/img/registro.png)
 
 
 
